@@ -33,22 +33,19 @@ var FunctionalList = (function() {
 
 
     function Cons(head, tail) {
-        this._head = head;
-        this._tail = tail;
+        this.head = function() {
+            return head;
+        };
+
+        this.tail = function() {
+            return tail;
+        };
     }
 
     Cons.prototype = new FunctionalList();
 
     Cons.prototype.isEmpty = function() {
         return false;
-    };
-
-    Cons.prototype.head = function() {
-        return this._head;
-    };
-
-    Cons.prototype.tail = function() {
-        return this._tail;
     };
 
 
