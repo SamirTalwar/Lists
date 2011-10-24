@@ -10,13 +10,13 @@ public abstract class FunctionalList<T> {
     }
 
     public static <T> FunctionalList<T> of(final T... items) {
-        return FunctionalList.of(items, 0, items.length);
+        return fromArray(items, 0, items.length);
     }
 
-    private static <T> FunctionalList<T> of(final T[] items, final int start, final int end) {
+    private static <T> FunctionalList<T> fromArray(final T[] items, final int start, final int end) {
         return start == end
                    ? FunctionalList.<T>nil()
-                   : cons(items[start], of(items, start + 1, end));
+                   : cons(items[start], fromArray(items, start + 1, end));
     }
 
     public abstract boolean isEmpty();
