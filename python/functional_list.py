@@ -15,8 +15,16 @@ class Nil(FunctionalList):
 
 class Cons(FunctionalList):
     def __init__(self, head, tail):
-        self.head = head
-        self.tail = tail
+        self._head = head
+        self._tail = tail
 
     def isEmpty(self):
         return False
+
+    @property
+    def head(self):
+        return self._head
+
+    @property
+    def tail(self):
+        return self._tail
