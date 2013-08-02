@@ -30,12 +30,7 @@ public abstract class FunctionalList<T>
 
     public abstract FunctionalList<T> Tail { get; }
 
-    public FunctionalList<U> Map<U>(Func<T, U> mapping)
-    {
-        return IsEmpty
-                   ? FunctionalList<U>.Nil()
-                   : FunctionalList<U>.Cons(mapping.Invoke(Head), Tail.Map(mapping));
-    }
+    public abstract Map<U>(Func<T, U> mapping);
 }
 
 sealed class Nil<T> : FunctionalList<T>
@@ -53,6 +48,11 @@ sealed class Nil<T> : FunctionalList<T>
     public override FunctionalList<T> Tail
     {
         get { throw new InvalidOperationException(); }
+    }
+
+    public override FunctionalList<U> Map<U>(Func<T, U> mapping)
+    {
+        return this;
     }
 }
 
@@ -80,5 +80,10 @@ sealed class Cons<T> : FunctionalList<T>
     public override FunctionalList<T> Tail
     {
         get { return _tail; }
+    }
+
+    public override FunctionalList<U> Map<U>(Func<T, U> mapping)
+    {
+        return FunctionalList<U>.Cons(mapping.Invoke(Head), Tail.Map(mapping));
     }
 }
