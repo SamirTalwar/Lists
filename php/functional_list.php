@@ -8,24 +8,24 @@ function cons($head, $tail) {
     return new Cons($head, $tail);
 }
 
-function list_of() {
-    $args = func_get_args();
-    return _from_array($args, 0, count($args));
-}
-
-function _from_array($items, $start, $end) {
-    if ($start === $end) {
-        return nil();
+abstract class FunctionalList {
+    public static function of() {
+        $args = func_get_args();
+        return self::_from_array($args, 0, count($args));
     }
-    return cons($items[$start], _from_array($items, $start + 1, $end));
-}
 
-interface FunctionalList {
-    public function isEmpty();
-    public function head();
-    public function tail();
+    private static function _from_array($items, $start, $end) {
+        if ($start === $end) {
+            return nil();
+        }
+        return cons($items[$start], self::_from_array($items, $start + 1, $end));
+    }
 
-    public function map($f);
+    public abstract function isEmpty();
+    public abstract function head();
+    public abstract function tail();
+
+    public abstract function map($f);
 }
 
 class Nil {
