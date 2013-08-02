@@ -18,10 +18,6 @@ var FunctionalList = (function() {
         return start === finish ? FunctionalList.nil() : FunctionalList.cons(items[start], fromArray(items, start + 1, finish));
     }
 
-    FunctionalList.prototype.map = function(mapping) {
-        return this.isEmpty() ? FunctionalList.nil : FunctionalList.cons(mapping(this.head()), this.tail().map(mapping));
-    };
-
 
     function Nil() { }
 
@@ -29,6 +25,10 @@ var FunctionalList = (function() {
 
     Nil.prototype.isEmpty = function() {
         return true;
+    };
+
+    Nil.prototype.map = function(mapping) {
+        return this;
     };
 
 
@@ -46,6 +46,10 @@ var FunctionalList = (function() {
 
     Cons.prototype.isEmpty = function() {
         return false;
+    };
+
+    Cons.prototype.map = function(mapping) {
+        return FunctionalList.cons(mapping(this.head()), this.tail().map(mapping));
     };
 
 
