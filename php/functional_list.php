@@ -9,14 +9,15 @@ function cons($head, $tail) {
 }
 
 function list_of() {
-    return _list_of(func_get_args());
+    $args = func_get_args();
+    return _from_array($args, 0, count($args));
 }
 
-function _list_of($args) {
-    if (count($args) === 0) {
+function _from_array($items, $start, $end) {
+    if ($start === $end) {
         return nil();
     }
-    return cons($args[0], _list_of(array_slice($args, 1)));
+    return cons($items[$start], _from_array($items, $start + 1, $end));
 }
 
 interface FunctionalList {
