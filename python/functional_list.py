@@ -6,12 +6,12 @@ class FunctionalList:
 
         return fromArray(items, 0, len(items))
 
-    def map(self, mapping):
-        return Nil() if self.isEmpty() else Cons(mapping(self.head), self.tail.map(mapping))
-
 class Nil(FunctionalList):
     def isEmpty(self):
         return True
+
+    def map(self, mapping):
+        return self
 
 class Cons(FunctionalList):
     def __init__(self, head, tail):
@@ -28,3 +28,6 @@ class Cons(FunctionalList):
     @property
     def tail(self):
         return self._tail
+
+    def map(self, mapping):
+        return Cons(mapping(self.head), self.tail.map(mapping))
