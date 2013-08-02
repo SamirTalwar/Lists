@@ -1,14 +1,14 @@
 <?php
 
-function nil() {
-    return new Nil();
-}
-
-function cons($head, $tail) {
-    return new Cons($head, $tail);
-}
-
 abstract class FunctionalList {
+    public static function nil() {
+        return new Nil();
+    }
+
+    public static function cons($head, $tail) {
+        return new Cons($head, $tail);
+    }
+
     public static function of() {
         $args = func_get_args();
         return self::_from_array($args, 0, count($args));
@@ -16,9 +16,9 @@ abstract class FunctionalList {
 
     private static function _from_array($items, $start, $end) {
         if ($start === $end) {
-            return nil();
+            return self::nil();
         }
-        return cons($items[$start], self::_from_array($items, $start + 1, $end));
+        return self::cons($items[$start], self::_from_array($items, $start + 1, $end));
     }
 
     public abstract function isEmpty();
@@ -65,7 +65,7 @@ class Cons {
     }
 
     public function map($f) {
-        return cons($f($this->head), $this->tail->map($f));
+        return FunctionalList::cons($f($this->head), $this->tail->map($f));
     }
 }
 
