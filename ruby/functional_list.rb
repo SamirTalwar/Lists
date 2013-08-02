@@ -11,10 +11,6 @@ module FunctionalList
     fromArray items, 0, items.length
   end
 
-  def map(&mapping)
-    isEmpty ? FunctionalList.nil : cons(mapping.call(head), tail.map(mapping))
-  end
-
 private
 
   def FunctionalList.fromArray(items, start, finish)
@@ -27,6 +23,10 @@ class Nil
 
   def isEmpty
     true
+  end
+
+  def map(&mapping)
+    self
   end
 end
 
@@ -42,5 +42,9 @@ class Cons
 
   def isEmpty
     false
+  end
+
+  def map(&mapping)
+    cons(mapping.call(head), tail.map(mapping))
   end
 end
