@@ -1,10 +1,10 @@
 class FunctionalList:
     @staticmethod
     def of(*items):
-        def fromArray(items, start, end):
-            return Nil() if start == end else Cons(items[start], fromArray(items, start + 1, end))
+        return _fromArray(items, 0, len(items))
 
-        return fromArray(items, 0, len(items))
+    def _fromArray(items, start, end):
+        return Nil() if start == end else Cons(items[start], _fromArray(items, start + 1, end))
 
 class Nil(FunctionalList):
     def isEmpty(self):
