@@ -28,6 +28,10 @@ class Nil
   def map(&mapping)
     self
   end
+
+  def ==(other)
+    other.is_a? Nil
+  end
 end
 
 class Cons
