@@ -25,12 +25,12 @@ class Nil
     true
   end
 
-  def map(&mapping)
-    self
-  end
-
   def ==(other)
     other.is_a? Nil
+  end
+
+  def map(&mapping)
+    self
   end
 end
 
@@ -46,6 +46,10 @@ class Cons
 
   def isEmpty
     false
+  end
+
+  def ==(other)
+    head == other.head && tail == other.tail
   end
 
   def map(&mapping)
