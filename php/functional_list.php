@@ -11,14 +11,19 @@ abstract class FunctionalList {
 
     public static function of() {
         $args = func_get_args();
-        return self::_from_array($args, 0, count($args));
+        return static::_from_array($args, 0, count($args));
+    }
+
+    public static function from_array($items)
+    {
+        return self::_from_array($items, 0, count($items));
     }
 
     private static function _from_array($items, $start, $end) {
         if ($start === $end) {
-            return self::nil();
+            return static::nil();
         }
-        return self::cons($items[$start], self::_from_array($items, $start + 1, $end));
+        return static::cons($items[$start], static::_from_array($items, $start + 1, $end));
     }
 
     public abstract function isEmpty();
@@ -28,7 +33,7 @@ abstract class FunctionalList {
     public abstract function map($f);
 }
 
-class Nil {
+class Nil extends FunctionalList {
     public function isEmpty() {
         return true;
     }
@@ -46,7 +51,7 @@ class Nil {
     }
 }
 
-class Cons {
+class Cons extends FunctionalList {
     public function __construct($head, $tail) {
         $this->head = $head;
         $this->tail = $tail;
