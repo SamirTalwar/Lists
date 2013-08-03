@@ -53,6 +53,6 @@ class Cons
   end
 
   def map(&mapping)
-    cons(mapping.call(head), tail.map(mapping))
+    FunctionalList.cons(mapping.call(head), tail.map(&mapping))
   end
 end
