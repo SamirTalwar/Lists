@@ -25,6 +25,10 @@ class Nil
     true
   end
 
+  def ==(other)
+    other.is_a? Nil
+  end
+
   def map(&mapping)
     self
   end
@@ -44,7 +48,11 @@ class Cons
     false
   end
 
+  def ==(other)
+    head == other.head && tail == other.tail
+  end
+
   def map(&mapping)
-    cons(mapping.call(head), tail.map(mapping))
+    FunctionalList.cons(mapping.call(head), tail.map(&mapping))
   end
 end
