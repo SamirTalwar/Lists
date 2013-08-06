@@ -1,3 +1,5 @@
+package com.noodlesandwich.lists;
+
 import java.util.NoSuchElementException;
 
 public abstract class FunctionalList<T> {
@@ -45,7 +47,20 @@ public abstract class FunctionalList<T> {
 
         @Override
         public <U> FunctionalList<U> map(Function<T, U> mapping) {
-            return this;
+            return nil();
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+
+            if (!(o instanceof FunctionalList)) {
+                return false;
+            }
+
+            return ((FunctionalList<T>) o).isEmpty();
         }
     }
 
@@ -76,6 +91,22 @@ public abstract class FunctionalList<T> {
         @Override
         public <U> FunctionalList<U> map(Function<T, U> mapping) {
             return cons(mapping.apply(head()), tail().map(mapping));
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+
+            if (!(o instanceof FunctionalList)) {
+                return false;
+            }
+
+            FunctionalList<T> list = ((FunctionalList<T>) o);
+            return !list.isEmpty()
+                && head().equals(list.head())
+                && tail().equals(list.tail());
         }
     }
 }
