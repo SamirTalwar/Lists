@@ -1,4 +1,7 @@
-var FunctionalList = (function() {
+(function() {
+    var root = this;
+
+
     function FunctionalList() { }
 
     FunctionalList.nil = function() {
@@ -31,6 +34,10 @@ var FunctionalList = (function() {
         return this;
     };
 
+    Nil.prototype.equals = function(other) {
+        return other.isEmpty();
+    };
+
 
     function Cons(head, tail) {
         this.head = function() {
@@ -52,6 +59,14 @@ var FunctionalList = (function() {
         return FunctionalList.cons(mapping(this.head()), this.tail().map(mapping));
     };
 
+    Cons.prototype.equals = function(other) {
+        return !other.isEmpty() && this.head() == other.head() && this.tail().equals(other.tail());
+    };
 
-    return FunctionalList;
-}());
+
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = FunctionalList;
+    }
+
+    root.FunctionalList = FunctionalList;
+})();
