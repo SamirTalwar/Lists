@@ -21,16 +21,16 @@ end
 class Nil
   include FunctionalList
 
-  def isEmpty
+  def empty?
     true
-  end
-
-  def ==(other)
-    other.is_a? Nil
   end
 
   def map(&mapping)
     self
+  end
+
+  def ==(other)
+    other.empty?
   end
 end
 
@@ -44,15 +44,15 @@ class Cons
     @tail = tail
   end
 
-  def isEmpty
+  def empty?
     false
-  end
-
-  def ==(other)
-    head == other.head && tail == other.tail
   end
 
   def map(&mapping)
     FunctionalList.cons(mapping.call(head), tail.map(&mapping))
+  end
+
+  def ==(other)
+    not other.empty? and head == other.head and tail == other.tail
   end
 end
