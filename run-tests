@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -e
+
+function test {
+    echo
+    echo "Running $1 tests..."
+    cd $2
+    shift
+    shift
+    "$@"
+    cd - > /dev/null
+}
+
+test Java java mvn test
+test JavaScript javascript jasmine-node spec
+test PHP php phpunit
+test Python python nosetests
+test Ruby ruby rspec
