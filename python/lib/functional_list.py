@@ -1,10 +1,11 @@
 class FunctionalList:
     @staticmethod
     def of(*items):
-        return _fromArray(items, 0, len(items))
+        return FunctionalList._fromArray(items, 0, len(items))
 
+    @staticmethod
     def _fromArray(items, start, end):
-        return Nil() if start == end else Cons(items[start], _fromArray(items, start + 1, end))
+        return Nil() if start == end else Cons(items[start], FunctionalList._fromArray(items, start + 1, end))
 
 class Nil(FunctionalList):
     def isEmpty(self):
@@ -12,6 +13,9 @@ class Nil(FunctionalList):
 
     def map(self, mapping):
         return self
+
+    def __eq__(self, other):
+        return other.isEmpty()
 
 class Cons(FunctionalList):
     def __init__(self, head, tail):
@@ -31,3 +35,8 @@ class Cons(FunctionalList):
 
     def map(self, mapping):
         return Cons(mapping(self.head), self.tail.map(mapping))
+
+    def __eq__(self, other):
+        return not other.isEmpty() \
+            and self.head == other.head \
+            and self.tail == other.tail
