@@ -1,4 +1,4 @@
-import unittest
+import os
+import sys
 
-if __name__ == '__main__':
-    unittest.main()
+sys.path = [os.path.abspath(os.path.dirname(__file__) + '../lib')] + sys.path
